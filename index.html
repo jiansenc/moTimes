@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>时间差计算器</title>
+    <script>
+        let T = 1000
+
+        function toT(t) {
+            return t >= 10 ? t : '0' + t
+        }
+
+        function formatTime(seconds) {
+            let hours = Math.floor(seconds / 3600);
+            let minutes = Math.floor((seconds - (hours * 3600)) / 60);
+            let remainingSeconds = seconds - (hours * 3600) - (minutes * 60);
+
+            return {
+                hours: hours,
+                minutes: minutes,
+                seconds: remainingSeconds
+            };
+        }
+
+        function calculateTimeDifference() {
+            var endTime = document.getElementById("end-time").value;
+            let now = new Date()
+            let nowtims = toT(now.getHours()) + ":" + toT(now.getMinutes())
+
+            var startDate = new Date("1970-01-01T" + nowtims + "Z");
+            var endDate = new Date("1970-01-01T" + endTime + "Z");
+
+            var timeDiff = endDate.getTime() - startDate.getTime();
+            var secondsDiff = Math.floor(timeDiff / T);
+
+            var progressBar = document.getElementById("progress-bar");
+            progressBar.value = 0;
+            progressBar.max = secondsDiff;
+
+            var countdown = document.getElementById("countdown");
+            countdown.innerHTML = secondsDiff;
+
+            var intervalId = setInterval(function () {
+                progressBar.value++;
+                let timobj = formatTime(secondsDiff - progressBar.value)
+                countdown.innerHTML = `还有${timobj.hours}小时${timobj.minutes}分钟${timobj.seconds}秒`
+                if (progressBar.value >= progressBar.max) {
+                    clearInterval(intervalId);
+                }
+            }, T);
+        }
+    </script>
+</head>
+
+<body>
+    <div style="    margin: 10% auto;width: 500px;border: 1px solid;padding: 28px;">
+        <div style="display: flex; ">
+            结束时间：
+            <input style="padding: 5px;font-size: 21px;font-weight: bold;font-family: emoji;" type="time"
+                id="end-time"><br>
+            <button onclick="calculateTimeDifference()">开始</button><br>
+        </div>
+        <progress style="width: 300px;height: 40px;" id="progress-bar" value="0" max="100"></progress><br>
+        <span id="countdown"></span>
+    </div>
+</body>
+
+</html>
