@@ -18,11 +18,16 @@
         
         const prdom = document.querySelector('#pr')
         const maxlen = 500000
-
+        const list = document.querySelector('#list')
         prdom.innerHTML = '处理中..'
         for (var i =0; i < 5;i++) {
             var worker = new Worker('work.js');
             worker.postMessage(document)
+            worker.onmessage = function(event) {
+                let dom = document.createElement('div')
+                dom.innerHTML = event.data
+                list.append(dom)
+            };
         }
         
     </script>
