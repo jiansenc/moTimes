@@ -10,7 +10,7 @@
     <div>
         <div id="list" style="max-height: 500px;overflow: auto;width: 500px;border: 1px solid;min-height: 300px;">
         </div>
-        <p id="pr" style="margin-top: 20px;">进度 0%</p>
+        <!-- <p id="pr" style="margin-top: 20px;">进度 0%</p> -->
     </div>
     <script>
         
@@ -19,7 +19,7 @@
         const prdom = document.querySelector('#pr')
         const maxlen = 500000
         const list = document.querySelector('#list')
-        prdom.innerHTML = '处理中..'
+        // prdom.innerHTML = '处理中..'
         for (var i =0; i < 5;i++) {
             var worker = new Worker('work.js');
             worker.postMessage(i)
