@@ -22,6 +22,7 @@
         prdom.innerHTML = '处理中..'
         for (var i =0; i < 5;i++) {
             var worker = new Worker('work.js');
+            worker.postMessage(i)
             worker.onmessage = function(event) {
                 let dom = document.createElement('div')
                 dom.innerHTML = event.data
